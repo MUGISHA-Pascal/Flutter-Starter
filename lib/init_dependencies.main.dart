@@ -13,7 +13,7 @@ Future<void> initDependencies() async {
 
   Hive.defaultDirectory = (await getApplicationDocumentsDirectory()).path;
 
-  serviceLocator.registerLazySingleton(() => supabase.client);
+  serviceLocator.registerLazySingleton<SupabaseClient>(() => supabase.client);
 
   serviceLocator.registerLazySingleton(() => Hive.box(name: 'blogs'));
 
@@ -32,7 +32,11 @@ void _initAuth() {
     ..registerFactory<AuthRemoteDataSource>(
       () => AuthRemoteDataSourceImpl(serviceLocator()),
     )
-    // Repository
+    // Register AuthRepositoryImpl directly for safety
+    ..registerFactory<AuthRepositoryImpl>(
+      () => AuthRepositoryImpl(serviceLocator(), serviceLocator()),
+    )
+    // https://github.com/MUGISHA-Pascal?tab=repositoriesRepository
     ..registerFactory<AuthRepository>(
       () => AuthRepositoryImpl(serviceLocator(), serviceLocator()),
     )
