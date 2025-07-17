@@ -64,6 +64,14 @@ void _initBlog() {
     ..registerFactory<BlogLocalDataSource>(
       () => BlogLocalDataSourceImpl(serviceLocator()),
     )
+    // Register BlogRepositoryImpl directly for safety
+    ..registerFactory<BlogRepositoryImpl>(
+      () => BlogRepositoryImpl(
+        serviceLocator(),
+        serviceLocator(),
+        serviceLocator(),
+      ),
+    )
     // Repository
     ..registerFactory<BlogRepository>(
       () => BlogRepositoryImpl(
