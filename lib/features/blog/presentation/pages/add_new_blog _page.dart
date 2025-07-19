@@ -45,6 +45,7 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
         image != null) {
       final posterId =
           (context.read<AppUserCubit>().state as AppUserLoggedIn).user.id;
+      print("posterId: $posterId");
       context.read<BlogBloc>().add(
         BlogUpload(
           posterId: posterId,

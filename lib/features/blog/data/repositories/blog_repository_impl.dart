@@ -34,6 +34,7 @@ class BlogRepositoryImpl implements BlogRepository {
       if (!await (connectionChecker.isConnected)) {
         return left(Failure(Constants.noConnectionMessage));
       }
+      print('Uploading blog with poster id: $posterId');
       BlogModel blogModel = BlogModel(
         id: const Uuid().v1(),
         posterId: posterId,
@@ -50,7 +51,7 @@ class BlogRepositoryImpl implements BlogRepository {
       );
 
       blogModel = blogModel.copyWith(imageUrl: imageUrl);
-
+print("image url is $imageUrl");
       final uploadedBlog = await blogRemoteDataSource.uploadBlog(blogModel);
       return right(uploadedBlog);
     } on ServerException catch (e) {

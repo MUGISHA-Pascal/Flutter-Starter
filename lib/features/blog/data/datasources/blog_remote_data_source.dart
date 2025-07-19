@@ -19,6 +19,8 @@ class BlogRemoteDataSourceImpl implements BlogRemoteDataSource {
 
   @override
   Future<BlogModel> uploadBlog(BlogModel blog) async {
+    print(blog.toJson());
+    print("in the blog remote data source");
     try {
       final blogData = await supabaseClient
           .from('blogs')
@@ -43,6 +45,7 @@ class BlogRemoteDataSourceImpl implements BlogRemoteDataSource {
 
       return supabaseClient.storage.from('blog-images').getPublicUrl(blog.id);
     } on StorageException catch (e) {
+      print("error in the blog remote data source $e.message");
       throw ServerException(e.message);
     } catch (e) {
       throw ServerException(e.toString());
