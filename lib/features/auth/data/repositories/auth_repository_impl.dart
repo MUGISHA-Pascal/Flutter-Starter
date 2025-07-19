@@ -70,6 +70,11 @@ class AuthRepositoryImpl implements AuthRepository {
     );
   }
 
+  @override
+  Future<void> logout() async {
+    await remoteDataSource.logout();
+  }
+
   Future<Either<Failure, User>> _getUser(Future<User> Function() fn) async {
     try {
       if (!await (connectionChecker.isConnected)) {
